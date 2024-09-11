@@ -1,8 +1,22 @@
-// src/components/Navbar.js
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ setAccessToken }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Eliminar los tokens y estado de autenticación del localStorage
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('isAuthenticated');
+
+    // Actualizar el estado de accessToken a null para que el Navbar desaparezca
+    setAccessToken(null);
+
+    // Redirigir al login
+    navigate('/login');
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -20,6 +34,13 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
+        {/* Botón Cerrar Sesión */}
+        <button 
+          className="btn btn-danger ms-auto"
+          onClick={handleLogout}
+        >
+          Cerrar Sesión
+        </button>
       </div>
     </nav>
   );

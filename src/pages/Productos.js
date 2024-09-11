@@ -10,16 +10,24 @@ const Productos = () => {
     const [stock, setStock] = useState('');
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/productos/')
-            .then(response => {
-                setProductos(response.data);
-                console.log('response.data', response.data);
-                
-            })
-            .catch(error => console.error(error));
+        // Obtener el token de acceso desde el localStorage
+        const token = localStorage.getItem('access_token');
+
+        axios.get('http://localhost:8000/api/productos/', {
+            headers: {
+                Authorization: `Bearer ${token}`,  // Incluir el token en el encabezado
+            },
+        })
+        .then(response => {
+            setProductos(response.data);
+            console.log('response.data', response.data);
+        })
+        .catch(error => console.error(error));
     }, []);
 
     const agregarProducto = () => {
+        const token = localStorage.getItem('access_token'); // Obtener el token
+
         const nuevoProducto = {
             nombre,
             descripcion,
@@ -27,7 +35,12 @@ const Productos = () => {
             precio_venta: parseFloat(precio_venta),  // Asegúrate de que 'precio_venta' sea un número
             stock: parseInt(stock, 10)         // Asegúrate de que 'stock' sea un entero
         };
-        axios.post('http://localhost:8000/api/productos/', nuevoProducto)
+
+        axios.post('http://localhost:8000/api/productos/', nuevoProducto, {
+            headers: {
+                Authorization: `Bearer ${token}`,  // Incluir el token en el encabezado
+            },
+        })
         .then(response => setProductos([...productos, response.data]))
         .catch(error => {
             console.error("Error al agregar el producto:", error.response.data);
@@ -40,12 +53,17 @@ const Productos = () => {
         setPrecio_venta('');
         setStock('');
     };
-    
 
     const eliminarProducto = (id) => {
-        axios.delete(`http://localhost:8000/api/productos/${id}/`)
-            .then(() => setProductos(productos.filter(producto => producto.id !== id)))
-            .catch(error => console.error(error));
+        const token = localStorage.getItem('access_token');  // Obtener el token
+
+        axios.delete(`http://localhost:8000/api/productos/${id}/`, {
+            headers: {
+                Authorization: `Bearer ${token}`,  // Incluir el token en el encabezado
+            },
+        })
+        .then(() => setProductos(productos.filter(producto => producto.id !== id)))
+        .catch(error => console.error(error));
     };
 
     return (
