@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Navbar';
+import Clientes from './pages/Clientes';
 
 function App() {
   const [accessToken, setAccessToken] = useState(localStorage.getItem('access_token'));
@@ -37,6 +38,7 @@ function App() {
             <Route path="/home" element={accessToken ? <Home /> : <Navigate to="/login" />} />
             <Route path="/productos" element={accessToken ? <Productos /> : <Navigate to="/login" />} />
             <Route path="/mascotas" element={accessToken ? <Mascotas /> : <Navigate to="/login" />} />
+            <Route path="/clientes" element={accessToken ? <Clientes /> : <Navigate to="/login" />} />
             <Route path="*" element={<Navigate to="/login" />} />
           </Routes>
         </header>

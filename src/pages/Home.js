@@ -18,6 +18,10 @@ const Home = () => {
     navigate('/mascotas');
   };
 
+  const ir_modulo_clientes = () => {
+    navigate('/clientes');
+  };
+
   const notify = () => {
     toast.success('¡Has hecho clic en el botón!', {
       position: "top-right",  // Usa una cadena en lugar de una constante
@@ -46,6 +50,13 @@ const Home = () => {
           Mascotas
         </button>
 
+        <br></br>
+        <br></br>
+
+        <button className="btn btn-info" onClick={ir_modulo_clientes}>
+          Clientes
+        </button>
+        
         <br></br>
         <br></br>
 
