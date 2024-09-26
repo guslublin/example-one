@@ -8,6 +8,10 @@ const Mascotas = () => {
     const [raza, setRaza] = useState('');
     const [procedencia, setProcedencia] = useState('');
 
+    const [clientes, setClientes] = useState([]);
+    const [clienteId, setClienteId] = useState('');
+
+
     useEffect(() => {
         // Obtener el token de acceso desde el localStorage
         const token = localStorage.getItem('access_token');
@@ -22,18 +26,32 @@ const Mascotas = () => {
             console.log('response.data', response.data);
         })
         .catch(error => console.error(error));
+
+        // Obtener lista de clientes
+        axios.get('http://localhost:8000/api/clientes/', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        .then(response => {
+            setClientes(response.data);
+        })
+        .catch(error => console.error(error));
+
+
     }, []);
 
     const agregarMascota = () => {
         const token = localStorage.getItem('access_token'); // Obtener el token
-
+    
         const nuevaMascota = {
             nombre,
             fecha_nacimiento: fechaNacimiento, // Asegúrate de que sea una cadena en formato aaaa-mm-dd
             raza,
             procedencia,
+            cliente: clienteId,  // Asociar la mascota con el cliente seleccionado
         };
-
+    
         axios.post('http://localhost:8000/api/mascotas/', nuevaMascota, {
             headers: {
                 Authorization: `Bearer ${token}`,  // Incluir el token en el encabezado
@@ -49,6 +67,7 @@ const Mascotas = () => {
         setFechaNacimiento('');
         setRaza('');
         setProcedencia('');
+        setClienteId('');  // Limpiar el campo cliente
     };
 
     const eliminarMascota = (id) => {
@@ -111,6 +130,25 @@ const Mascotas = () => {
                                     onChange={(e) => setProcedencia(e.target.value)} 
                                 />
                             </div>
+
+                            {/* Lista desplegable de clientes */}
+                            <div className="mb-3">
+                            <label htmlFor="cliente" className="form-label">Cliente</label>
+                            <select 
+                                id="cliente" 
+                                className="form-select" 
+                                value={clienteId} 
+                                onChange={(e) => setClienteId(e.target.value)}>
+                                <option value="">Selecciona un cliente</option>
+                                {clientes.map(cliente => (
+                                    <option key={cliente.id} value={cliente.id}>
+                                        {cliente.nombre} - CI: {cliente.ci}
+                                    </option>
+                                ))}
+                            </select>
+
+                        </div>
+
                             <button 
                                 type="button" 
                                 className="btn btn-success w-100" 
