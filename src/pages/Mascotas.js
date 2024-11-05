@@ -86,111 +86,117 @@ const Mascotas = () => {
         <div>
             <div className="container">
                 <h1 className="text-center">Bienvenido al módulo de Mascotas</h1>
-                <div className="card mx-auto" style={{ maxWidth: '600px' }}>
-                    <div className="card-body">
-                        <h5 className="card-title text-center">ABM de Mascotas</h5>
-                        <form>
-                            <div className="mb-3">
-                                <label htmlFor="nombre" className="form-label">Nombre</label>
-                                <input 
-                                    type="text" 
-                                    className="form-control" 
-                                    id="nombre" 
-                                    value={nombre}
-                                    onChange={(e) => setNombre(e.target.value)} 
-                                />
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="card mx-auto" style={{ maxWidth: '600px' }}>
+                            <div className="card-body">
+                                <h5 className="card-title text-center">ABM de Mascotas</h5>
+                                <form>
+                                    <div className="mb-3">
+                                        <label htmlFor="nombre" className="form-label">Nombre</label>
+                                        <input 
+                                            type="text" 
+                                            className="form-control" 
+                                            id="nombre" 
+                                            value={nombre}
+                                            onChange={(e) => setNombre(e.target.value)} 
+                                        />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="fechaNacimiento" className="form-label">Fecha de Nacimiento</label>
+                                        <input 
+                                            type="date" 
+                                            className="form-control" 
+                                            id="fechaNacimiento" 
+                                            value={fechaNacimiento}
+                                            onChange={(e) => setFechaNacimiento(e.target.value)} 
+                                        />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="raza" className="form-label">Raza</label>
+                                        <input 
+                                            type="text" 
+                                            className="form-control" 
+                                            id="raza" 
+                                            value={raza}
+                                            onChange={(e) => setRaza(e.target.value)} 
+                                        />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="procedencia" className="form-label">Procedencia</label>
+                                        <input 
+                                            type="text" 
+                                            className="form-control" 
+                                            id="procedencia" 
+                                            value={procedencia}
+                                            onChange={(e) => setProcedencia(e.target.value)} 
+                                        />
+                                    </div>
+    
+                                    {/* Lista desplegable de clientes */}
+                                    <div className="mb-3">
+                                        <label htmlFor="cliente" className="form-label">Cliente</label>
+                                        <select 
+                                            id="cliente" 
+                                            className="form-select" 
+                                            value={clienteId} 
+                                            onChange={(e) => setClienteId(e.target.value)}>
+                                            <option value="">Selecciona un cliente</option>
+                                            {clientes.map(cliente => (
+                                                <option key={cliente.id} value={cliente.id}>
+                                                    {cliente.nombre} - CI: {cliente.ci}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+    
+                                    <button 
+                                        type="button" 
+                                        className="btn btn-success w-100" 
+                                        onClick={agregarMascota}>
+                                        Agregar
+                                    </button>
+                                </form>
                             </div>
-                            <div className="mb-3">
-                                <label htmlFor="fechaNacimiento" className="form-label">Fecha de Nacimiento</label>
-                                <input 
-                                    type="date" 
-                                    className="form-control" 
-                                    id="fechaNacimiento" 
-                                    value={fechaNacimiento}
-                                    onChange={(e) => setFechaNacimiento(e.target.value)} 
-                                />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="raza" className="form-label">Raza</label>
-                                <input 
-                                    type="text" 
-                                    className="form-control" 
-                                    id="raza" 
-                                    value={raza}
-                                    onChange={(e) => setRaza(e.target.value)} 
-                                />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="procedencia" className="form-label">Procedencia</label>
-                                <input 
-                                    type="text" 
-                                    className="form-control" 
-                                    id="procedencia" 
-                                    value={procedencia}
-                                    onChange={(e) => setProcedencia(e.target.value)} 
-                                />
-                            </div>
-
-                            {/* Lista desplegable de clientes */}
-                            <div className="mb-3">
-                            <label htmlFor="cliente" className="form-label">Cliente</label>
-                            <select 
-                                id="cliente" 
-                                className="form-select" 
-                                value={clienteId} 
-                                onChange={(e) => setClienteId(e.target.value)}>
-                                <option value="">Selecciona un cliente</option>
-                                {clientes.map(cliente => (
-                                    <option key={cliente.id} value={cliente.id}>
-                                        {cliente.nombre} - CI: {cliente.ci}
-                                    </option>
-                                ))}
-                            </select>
-
                         </div>
-
-                            <button 
-                                type="button" 
-                                className="btn btn-success w-100" 
-                                onClick={agregarMascota}>
-                                Agregar
-                            </button>
-                        </form>
+                    </div>
+    
+                    <div className="col-md-6">
+                        <h3 className="text-center">Listado de Mascotas</h3>
+                        <table className="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Fecha de Nacimiento</th>
+                                    <th scope="col">Raza</th>
+                                    <th scope="col">Procedencia</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {mascotas.map((mascota) => (
+                                    <tr key={mascota.id}>
+                                        <td>{mascota.nombre}</td>
+                                        <td>{mascota.fecha_nacimiento}</td>
+                                        <td>{mascota.raza}</td>
+                                        <td>{mascota.procedencia}</td>
+                                        <td>
+                                            <button 
+                                                className="btn btn-danger btn-sm" 
+                                                onClick={() => eliminarMascota(mascota.id)}>
+                                                X
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
-                <h3 className="text-center">Listado de Mascotas</h3>
-                <table className="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Fecha de Nacimiento</th>
-                            <th scope="col">Raza</th>
-                            <th scope="col">Procedencia</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {mascotas.map((mascota) => (
-                            <tr key={mascota.id}>
-                                <td>{mascota.nombre}</td>
-                                <td>{mascota.fecha_nacimiento}</td>
-                                <td>{mascota.raza}</td>
-                                <td>{mascota.procedencia}</td>
-                                <td>
-                                    <button 
-                                        className="btn btn-danger btn-sm" 
-                                        onClick={() => eliminarMascota(mascota.id)}>
-                                        X
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
             </div>
         </div>
     );
+    
 };
 
 export default Mascotas;
