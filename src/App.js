@@ -9,6 +9,10 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Navbar';
 import Clientes from './pages/Clientes';
+import Ventas from './pages/Ventas';
+import ListadoVentas from './pages/ListadoVentas';  // Importar componente
+import NuevaVenta from './pages/NuevaVenta';  // Importar componente
+import VerVenta from './pages/VerVenta';
 
 function App() {
   const [accessToken, setAccessToken] = useState(localStorage.getItem('access_token'));
@@ -31,6 +35,8 @@ function App() {
         <ToastContainer />
         <header className="App-header">
           {accessToken && <Navbar setAccessToken={setAccessToken} />}  {/* Pasar setAccessToken como prop */}
+          <br></br>
+          <br></br>
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<Login setAccessToken={setAccessToken} />} />
@@ -39,7 +45,11 @@ function App() {
             <Route path="/productos" element={accessToken ? <Productos /> : <Navigate to="/login" />} />
             <Route path="/mascotas" element={accessToken ? <Mascotas /> : <Navigate to="/login" />} />
             <Route path="/clientes" element={accessToken ? <Clientes /> : <Navigate to="/login" />} />
+            <Route path="/ventas" element={accessToken ? <Ventas /> : <Navigate to="/login" />} />
             <Route path="*" element={<Navigate to="/login" />} />
+            <Route path="/ventas/listado" element={accessToken ? <ListadoVentas /> : <Navigate to="/login" />} />
+            <Route path="/ventas/nueva" element={accessToken ? <NuevaVenta /> : <Navigate to="/login" />} />
+            <Route path="/ventas/ver/:id" element={accessToken ? <VerVenta /> : <Navigate to="/login" />} />
           </Routes>
         </header>
       </div>

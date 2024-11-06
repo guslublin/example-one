@@ -35,6 +35,9 @@ const Navbar = ({ setAccessToken }) => {
             <li className="nav-item">
               <Link className="nav-link" to="/clientes">Clientes</Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/ventas">Ventas</Link>
+            </li>
           </ul>
         </div>
         {/* Botón Cerrar Sesión */}

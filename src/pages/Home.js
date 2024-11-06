@@ -31,8 +31,6 @@ const Home = () => {
 
   return (
     <div>
-      <br></br>
-      <br></br>
       <div className="container">
         
         <h1 className="text-center">Bienvenido al módulo Home</h1>
